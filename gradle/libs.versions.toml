@@ -6,3 +6,14 @@ guava = "32.1.3-jre"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
+
+springBootStarterDataJpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+springBootStarterWeb = { module = "org.springframework.boot:spring-boot-starter-web" }
+springBootStarterValidation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+springBootStarterActuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+springBootStarterSecurity = { module = "org.springframework.boot:spring-boot-starter-security" }
+springBootStarterTest = { module = "org.springframework.boot:spring-boot-starter-test" }
+springBootStarterWebTest = { module = "org.springframework.boot:spring-boot-starter-test" }
+springBootDevtools = { module = "org.springframework.boot:spring-boot-devtools" }
+springBootConfigProcessor = { module = "org.springframework.boot:spring-boot-configuration-processor" }
+
