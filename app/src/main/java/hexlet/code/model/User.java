@@ -47,7 +47,8 @@ public class User implements UserDetails, BaseEntity {
     @ToString.Include
     private String lastName;
 
-    @NotBlank private String passwordDigest;
+    @NotBlank
+    private String passwordDigest;
 
     @LastModifiedDate
     private Date updatedAt;

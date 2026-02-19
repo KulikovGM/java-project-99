@@ -13,9 +13,9 @@ public class WelcomeController {
     String welcome() {
         return "welcome";
     }
+
     @GetMapping("")
     String hello() {
         return "Hello!";
     }
-
 }
