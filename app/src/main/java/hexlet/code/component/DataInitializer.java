@@ -23,6 +23,8 @@ public class DataInitializer implements ApplicationRunner {
         var userData = new User();
         userData.setEmail(email);
         userData.setPasswordDigest("qwerty");
+        userData.setFirstName("admin");
+        userData.setLastName("adminov");
         userRepository.save(userData);
     }
 }

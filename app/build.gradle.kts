@@ -30,6 +30,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("net.datafaker:datafaker:2.3.0")
+    implementation("org.openapitools:jackson-databind-nullable:0.2.6")
 
     testImplementation(libs.springBootStarterTest)
     testImplementation(libs.springBootStarterWebTest)
