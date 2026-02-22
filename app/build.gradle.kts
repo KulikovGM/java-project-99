@@ -27,7 +27,7 @@ dependencies {
     implementation(libs.springBootStarterSecurity)
     implementation(libs.springBootDevtools)
     implementation(libs.springBootConfigProcessor)
-    //implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("net.datafaker:datafaker:2.3.0")
 
