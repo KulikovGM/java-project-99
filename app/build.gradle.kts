@@ -1,6 +1,10 @@
+import org.gradle.api.tasks.testing.Test
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 plugins {
     application
-    //checkstyle
+    checkstyle
     jacoco
     id("io.freefair.lombok") version "8.13.1"
     //id("org.sonarqube") version "6.2.0.5505"
@@ -17,7 +21,6 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.guava)
 
     implementation(libs.springBootStarterDataJpa)
     implementation(libs.springBootStarterWeb)
@@ -31,6 +34,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("net.datafaker:datafaker:2.3.0")
     implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+    implementation("org.instancio:instancio-junit:5.0.2")
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.6.3")
 
     testImplementation(libs.springBootStarterTest)
     testImplementation(libs.springBootStarterWebTest)

@@ -1,9 +1,7 @@
-package hexlet.code.dto;
+package hexlet.code.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Getter
 @Setter
