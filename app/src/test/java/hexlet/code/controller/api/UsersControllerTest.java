@@ -1,5 +1,7 @@
 package hexlet.code.controller.api;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,26 +43,27 @@ public class UsersControllerTest {
 
     @BeforeEach
     public void setup() {
-        var user = userRepository.findByEmail("hexlet@example.com")
-                .orElseGet(() -> {
-                    var newUser = new User();
-                    newUser.setEmail("hexlet@example.com");
-                    newUser.setPasswordDigest("password");
-                    return userRepository.save(newUser);
-                });
+        userRepository.deleteAll();
+
+        var user = new User();
+        user.setEmail("hexlet@example.com");
+        user.setPasswordDigest(passwordEncoder.encode("qwerty"));
+        userRepository.save(user);
+
         token = getAuthToken(user);
     }
 
-    protected String getAuthToken(User user) {
-        var userDetails = org.springframework.security.core.userdetails.User.withUsername(user.getEmail())
-                .password(user.getPassword())
-                .authorities(Collections.emptyList())
-                .build();
-        return "Bearer " + jwtUtil.generateToken(String.valueOf(userDetails));
+    protected String getAuthToken(User user) {;
+        return "Bearer " + jwtUtil.generateToken(user.getEmail());
     }
 
-
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    @Test
+    public void testIndexWithoutAuth() throws Exception {
+        mockMvc.perform(get("/api/users"))
+                .andExpect(status().isUnauthorized()); // 401
+    }
 
     @Test
     public void testIndex() throws Exception {
@@ -68,16 +71,4 @@ public class UsersControllerTest {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    public void testIndex2() throws Exception {
-////        mockMvc.perform(get("/users"))
-////                .andExpect(status().isOk());
-//        var result = mockMvc.perform(get("/api/users"))
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        // Тело JSON
-//        var body = result.getResponse().getContentAsString();
-//        assertThatJson(body).isArray();
-//    }
 }
