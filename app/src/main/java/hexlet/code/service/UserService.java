@@ -33,6 +33,16 @@ public class UserService {
     }
 
     @Transactional
+    public UserDTO create(UserCreateDTO userData) {
+        var user = userMapper.map(userData);
+
+        user.setPasswordDigest(passwordEncoder.encode(userData.getPassword()));
+
+        userRepository.save(user);
+        return userMapper.map(user);
+    }
+
+    @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
     }

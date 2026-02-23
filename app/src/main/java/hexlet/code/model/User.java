@@ -56,11 +56,6 @@ public class User implements UserDetails, BaseEntity {
     @CreatedDate
     private Date createdAt;
 
-    // @Override
-    // public String getPassword() {
-    // return password;
-    // }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<GrantedAuthority>();
