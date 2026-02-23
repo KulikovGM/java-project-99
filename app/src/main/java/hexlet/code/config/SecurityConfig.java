@@ -2,6 +2,7 @@ package hexlet.code.config;
 
 import hexlet.code.service.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,12 +21,17 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
-@EnableMethodSecurity(prePostEnabled = true)
+//@AllArgsConstructor
+//@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-    private final JwtDecoder jwtDecoder;
-    private final PasswordEncoder passwordEncoder;
-    private final CustomUserDetailsService userDetailsService;
+    @Autowired
+    private JwtDecoder jwtDecoder;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CustomUserDetailsService userService;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
@@ -51,14 +57,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .build();
     }
     @Bean
-    AuthenticationProvider daoAuthProvider(AuthenticationManagerBuilder auth) {
+    public AuthenticationProvider daoAuthProvider(AuthenticationManagerBuilder auth) {
         var provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
+        provider.setUserDetailsService(userService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }

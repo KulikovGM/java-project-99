@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
-@Setter
-@Getter
 @Component
 @ConfigurationProperties(prefix = "rsa")
+@Setter
+@Getter
 public class RsaKeyProperties {
     private RSAPublicKey publicKey;
     private RSAPrivateKey privateKey;

@@ -1,17 +1,23 @@
 package hexlet.code.controller.api;
 
+import hexlet.code.dto.user.UserDTO;
+import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
+import hexlet.code.service.UserService;
 import hexlet.code.util.UserUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/users")
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
-
+    private final UserService userService;
     @Autowired
     private UserRepository userRepository;
 
@@ -19,8 +25,11 @@ public class UserController {
     private UserUtils userUtils;
 
     @GetMapping("")
-    public List<User> index(@RequestParam(defaultValue = "10") Integer limit) {
-        return userRepository.findAll().stream().toList();
+    public ResponseEntity<List<UserDTO>> index() {
+        List<UserDTO> users = userService.getAll();
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(users.size()))
+                .body(users);
     }
 
 }

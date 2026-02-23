@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,17 +15,19 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements ApplicationRunner {
     @Autowired
     private final UserRepository userRepository;
-
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private final ModelGenerator modelGenerator;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         var email = "hexlet@example.com";
         var userData = new User();
         userData.setEmail(email);
-        userData.setPasswordDigest("qwerty");
-        userData.setFirstName("admin");
-        userData.setLastName("admin");
+        userData.setPasswordDigest(passwordEncoder.encode("qwerty"));
+//        userData.setFirstName("admin");
+//        userData.setLastName("admin");
         userRepository.save(userData);
     }
 }

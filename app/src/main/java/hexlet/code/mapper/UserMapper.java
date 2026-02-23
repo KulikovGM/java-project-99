@@ -1,6 +1,7 @@
 package hexlet.code.mapper;
 
 
+import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.model.User;
 import org.mapstruct.Mapper;
@@ -15,7 +16,7 @@ import org.mapstruct.ReportingPolicy;
 public abstract class UserMapper {
     public abstract UserDTO map(User model);
 
-    public abstract User map(UserDTO model);
+    public abstract User map(UserCreateDTO dto);
 
     public abstract void update(UserDTO update, @MappingTarget User destination);
 }
