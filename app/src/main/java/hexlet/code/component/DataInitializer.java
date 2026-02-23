@@ -24,7 +24,7 @@ public class DataInitializer implements ApplicationRunner {
         userData.setEmail(email);
         userData.setPasswordDigest("qwerty");
         userData.setFirstName("admin");
-        userData.setLastName("adminov");
+        userData.setLastName("admin");
         userRepository.save(userData);
     }
 }
