@@ -3,11 +3,16 @@ package hexlet.code.controller.api;
 import hexlet.code.dto.taskstatus.TaskStatusCreateDTO;
 import hexlet.code.dto.taskstatus.TaskStatusDTO;
 
+import hexlet.code.dto.taskstatus.TaskStatusUpdateDTO;
+import hexlet.code.dto.user.UserDTO;
+import hexlet.code.dto.user.UserUpdateDTO;
 import hexlet.code.service.TaskStatusService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +30,25 @@ public class TaskStatusesController {
                 .body(taskStatusService.getAll());
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TaskStatusDTO show(@PathVariable Long id) {
+        return taskStatusService.findById(id);
+    }
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskStatusDTO create(@Valid @RequestBody TaskStatusCreateDTO statusData) {
         return taskStatusService.create(statusData);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TaskStatusDTO update(@Valid @RequestBody TaskStatusUpdateDTO statusData,
+                                @PathVariable Long id,
+                                @AuthenticationPrincipal UserDetails currentUser) {
+
+        return taskStatusService.update(statusData, id);
     }
 
     @DeleteMapping("/{id}")
