@@ -38,6 +38,12 @@ public class UserController {
                 .body(users);
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDTO show(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO create(@Valid @RequestBody UserCreateDTO userData) {
@@ -51,6 +57,12 @@ public class UserController {
                           @AuthenticationPrincipal UserDetails currentUser) {
 
         return userService.update(userData, id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void destroy(@PathVariable Long id) {
+        userService.delete(id);
     }
 
 }
