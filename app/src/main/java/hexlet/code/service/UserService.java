@@ -1,20 +1,22 @@
 package hexlet.code.service;
 
 
+import hexlet.code.dto.user.UserUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {
 
@@ -32,7 +34,6 @@ public class UserService {
         return userMapper.map(user);
     }
 
-    @Transactional
     public UserDTO create(UserCreateDTO userData) {
         var user = userMapper.map(userData);
 
@@ -42,8 +43,17 @@ public class UserService {
         return userMapper.map(user);
     }
 
-    @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    public UserDTO update(UserUpdateDTO userData, Long id) {
+        var user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+
+        userMapper.update(userData, user);
+        userRepository.save(user);
+
+        return userMapper.map(user);
     }
 }
