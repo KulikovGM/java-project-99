@@ -1,7 +1,9 @@
 package hexlet.code.component;
 
+import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.User;
-import hexlet.code.repository.UserRepository;
+import hexlet.code.repository.TaskStatusRepository;
+import hexlet.code.repository.StatusRepository;
 import lombok.AllArgsConstructor;
 //import org.instancio.Instancio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,13 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class DataInitializer implements ApplicationRunner {
     @Autowired
-    private final UserRepository userRepository;
+    private final StatusRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TaskStatusRepository taskStatusRepository;
+    @Autowired
+    private TaskStatusMapper taskStatusMapper;
 //    @Autowired
 //    private final ModelGenerator modelGenerator;
 
@@ -29,5 +35,6 @@ public class DataInitializer implements ApplicationRunner {
 //        userData.setFirstName("admin");
 //        userData.setLastName("admin");
         userRepository.save(userData);
+
     }
 }

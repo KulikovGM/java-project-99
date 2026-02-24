@@ -1,7 +1,7 @@
 package hexlet.code.service;
 
 import hexlet.code.model.User;
-import hexlet.code.repository.UserRepository;
+import hexlet.code.repository.StatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsManager {
 
     @Autowired
-    private UserRepository userRepository;
+    private StatusRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

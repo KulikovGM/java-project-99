@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import hexlet.code.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.repository.UserRepository;
+import hexlet.code.repository.StatusRepository;
 import hexlet.code.util.JWTUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Collections;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
@@ -34,7 +32,7 @@ public class UsersControllerTest {
     protected ObjectMapper om;
 
     @Autowired
-    protected UserRepository userRepository;
+    protected StatusRepository userRepository;
 
     @Autowired
     protected JWTUtils jwtUtil;
