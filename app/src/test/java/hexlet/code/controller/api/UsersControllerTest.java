@@ -5,12 +5,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import hexlet.code.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import hexlet.code.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.repository.StatusRepository;
 import hexlet.code.util.JWTUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ public class UsersControllerTest {
     protected ObjectMapper om;
 
     @Autowired
-    protected StatusRepository userRepository;
+    protected UserRepository userRepository;
 
     @Autowired
     protected JWTUtils jwtUtil;

@@ -2,7 +2,7 @@ package hexlet.code.util;
 
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.User;
-import hexlet.code.repository.StatusRepository;
+import hexlet.code.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import net.datafaker.Faker;
@@ -21,7 +21,7 @@ public class ModelGenerator {
     private Faker faker;
 
     @Autowired
-    private StatusRepository userRepository;
+    private UserRepository userRepository;
     private Model<TaskStatus> taskStatusModel;
 
     @PostConstruct

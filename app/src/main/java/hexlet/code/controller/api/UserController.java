@@ -3,7 +3,7 @@ package hexlet.code.controller.api;
 import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.dto.user.UserDTO;
 import hexlet.code.dto.user.UserUpdateDTO;
-import hexlet.code.repository.StatusRepository;
+import hexlet.code.repository.UserRepository;
 import hexlet.code.service.UserService;
 import hexlet.code.util.UserUtils;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     @Autowired
-    private StatusRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private UserUtils userUtils;
