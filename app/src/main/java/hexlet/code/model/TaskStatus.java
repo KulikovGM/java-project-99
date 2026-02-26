@@ -16,6 +16,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -42,6 +43,6 @@ public class TaskStatus implements BaseEntity {
     private String slug;
 
     @CreatedDate
-    private Instant createdAt;
+    private LocalDate createdAt;
 
 }

@@ -4,8 +4,6 @@ import hexlet.code.dto.taskstatus.TaskStatusCreateDTO;
 import hexlet.code.dto.taskstatus.TaskStatusDTO;
 
 import hexlet.code.dto.taskstatus.TaskStatusUpdateDTO;
-import hexlet.code.dto.user.UserDTO;
-import hexlet.code.dto.user.UserUpdateDTO;
 import hexlet.code.service.TaskStatusService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

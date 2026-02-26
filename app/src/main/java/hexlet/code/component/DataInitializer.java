@@ -1,5 +1,6 @@
 package hexlet.code.component;
 
+import hexlet.code.mapper.TaskMapper;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.model.User;
 import hexlet.code.repository.TaskStatusRepository;
@@ -23,6 +24,8 @@ public class DataInitializer implements ApplicationRunner {
     private TaskStatusRepository taskStatusRepository;
     @Autowired
     private TaskStatusMapper taskStatusMapper;
+    @Autowired
+    private TaskMapper taskMapper;
 //    @Autowired
 //    private final ModelGenerator modelGenerator;
 

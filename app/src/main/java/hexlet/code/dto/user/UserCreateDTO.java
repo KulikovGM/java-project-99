@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class UserCreateDTO {
@@ -22,4 +24,5 @@ public class UserCreateDTO {
     @NotNull
     @Size(min = 3, max = 100)
     private String password;
+
 }

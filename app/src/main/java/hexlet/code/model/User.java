@@ -8,9 +8,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,10 +53,10 @@ public class User implements UserDetails, BaseEntity {
     private String passwordDigest;
 
     @LastModifiedDate
-    private Date updatedAt;
+    private LocalDate updatedAt;
 
     @CreatedDate
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
