@@ -46,6 +46,9 @@ public class Task implements BaseEntity {
     @ManyToOne
     private TaskStatus taskStatus;
 
+    @ManyToMany
+    private Set<Label> labels = new HashSet<>();
+
     @ManyToOne
     private User assignee;
 
