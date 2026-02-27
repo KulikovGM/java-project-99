@@ -30,4 +30,10 @@ public class TaskSpecification {
                 : cb.equal(root.get("taskStatus").get("slug"), status));
     }
 
+    private Specification<Task> withLabelId(Long labelId) {
+        return (root, query, criteriaBuilder) -> labelId == null
+                ? criteriaBuilder.conjunction()
+                : criteriaBuilder.equal(root.get("labels").get("id"), labelId);
+    }
+
 }
