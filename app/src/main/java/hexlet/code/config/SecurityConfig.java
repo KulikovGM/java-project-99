@@ -21,8 +21,8 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 @EnableWebSecurity
-//@AllArgsConstructor
-//@EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Autowired
     private JwtDecoder jwtDecoder;
@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
+                                "/welcome",
                                 "/index.html",
                                 "/api/login",
                                 "/assets/**",
