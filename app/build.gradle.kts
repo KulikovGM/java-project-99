@@ -47,6 +47,7 @@ dependencies {
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:3.2.7")
 
     implementation("com.h2database:h2")
+    implementation("org.springdoc","springdoc-openapi-starter-webmvc-ui", "2.0.2")
 }
 
 testing {
