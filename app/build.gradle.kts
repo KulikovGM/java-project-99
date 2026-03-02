@@ -7,10 +7,17 @@ plugins {
     checkstyle
     jacoco
     id("io.freefair.lombok") version "8.13.1"
-    // id("org.sonarqube") version "6.2.0.5505"
+    id("org.sonarqube") version "7.1.0.6387"
     id("io.sentry.jvm.gradle") version "5.8.0"
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.3"
+}
+
+sonar {
+    properties {
+        property("sonar.projectKey", "KulikovGM_java-project-99")
+        property("sonar.organization", "kulikovgm")
+    }
 }
 
 group = "hexlet.code"
