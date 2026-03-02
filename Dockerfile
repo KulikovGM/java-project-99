@@ -1,9 +1,9 @@
 FROM eclipse-temurin:21-jdk
 
-WORKDIR /app
+WORKDIR /java-project-99
 
-COPY /app .
-COPY /gradle .
+COPY /java-project-99 .
+
 
 RUN ./gradlew installDist
 
