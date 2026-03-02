@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jdk
 
-WORKDIR /
+WORKDIR /app
 
 COPY /app .
 
