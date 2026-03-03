@@ -27,49 +27,51 @@ public class ModelGenerator {
     @Autowired
     private Faker faker;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
-    private LabelRepository labelRepository;
-
     @PostConstruct
     private void init() {
+        userModel = buildUserModel();
+        taskStatusModel = buildTaskStatusModel();
+        labelModel = buildLabelModel();
+        taskModel = buildTaskModel();
+    }
 
-        userModel = Instancio.of(User.class)
+    private Model<User> buildUserModel() {
+        return Instancio.of(User.class)
                 .ignore(Select.field(User::getId))
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
                 .supply(Select.field(User::getLastName), () -> faker.name().lastName())
-                .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress(faker.name().username()))
+                .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
                 .toModel();
+    }
 
-        taskStatusModel = Instancio.of(TaskStatus.class)
+    private Model<TaskStatus> buildTaskStatusModel() {
+        return Instancio.of(TaskStatus.class)
                 .ignore(Select.field(TaskStatus::getId))
-                .supply(Select.field(TaskStatus::getName), () -> faker.book().title()
-                                                                 + faker.number().numberBetween(1, 100))
-                .supply(Select.field(TaskStatus::getSlug), () -> faker.music().genre()
-                                                                 + faker.number().numberBetween(1, 100))
+                .supply(Select.field(TaskStatus::getName), () -> faker.lorem().word() + randomInt())
+                .supply(Select.field(TaskStatus::getSlug), () -> faker.lorem().word() + randomInt())
                 .toModel();
+    }
 
-        labelModel = Instancio.of(Label.class)
+    private Model<Label> buildLabelModel() {
+        return Instancio.of(Label.class)
                 .ignore(Select.field(Label::getId))
-                .supply(Select.field(Label::getName), () -> faker.music().genre()
-                                                            + faker.number().numberBetween(1, 100))
+                .supply(Select.field(Label::getName), () -> faker.lorem().word() + randomInt())
                 .toModel();
+    }
 
-        taskModel = Instancio.of(Task.class)
+    private Model<Task> buildTaskModel() {
+        return Instancio.of(Task.class)
                 .ignore(Select.field(Task::getId))
-                .supply(Select.field(Task::getName), () -> faker.gameOfThrones().city()
-                                                           + faker.number().numberBetween(1, 100))
-                .supply(Select.field(Task::getIndex), () -> faker.number().numberBetween(1, 1000))
-                .supply(Select.field(Task::getDescription), () -> faker.book().title()
-                                                                  + faker.number().numberBetween(1, 100))
                 .ignore(Select.field(Task::getTaskStatus))
                 .ignore(Select.field(Task::getAssignee))
                 .ignore(Select.field(Task::getLabels))
+                .supply(Select.field(Task::getName), () -> faker.lorem().word() + randomInt())
+                .supply(Select.field(Task::getDescription), () -> faker.lorem().sentence())
+                .supply(Select.field(Task::getIndex), () -> faker.number().numberBetween(1, 1000))
                 .toModel();
+    }
+
+    private int randomInt() {
+        return faker.number().numberBetween(1, 9999);
     }
 }
