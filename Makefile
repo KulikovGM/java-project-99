@@ -19,11 +19,11 @@ test:
 report:
 	./gradlew jacocoTestReport
 
-lint:
-	./gradlew checkstyleMain
+#lint:
+#	./gradlew checkstyleMain
 
-update-deps:
-	./gradlew refreshVersions
+#update-deps:
+#	./gradlew refreshVersions
 
 build-run: build run
 
