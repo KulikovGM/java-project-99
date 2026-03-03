@@ -1,3 +1,5 @@
+.PHONY: clean test reload-classes install lint setup build
+
 clean:
 	./gradlew clean
 
@@ -12,3 +14,16 @@ install:
 
 lint:
 	./gradlew checkstyleMain checkstyleTest
+
+setup:
+	chmod +x gradlew
+	./gradlew clean build -x test
+
+build:
+	./gradlew build
+
+run:
+	./gradlew bootRun
+
+check:
+	./gradlew check
