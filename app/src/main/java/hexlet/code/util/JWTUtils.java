@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 @Component
-//@AllArgsConstructor
+@AllArgsConstructor
 public class JWTUtils {
     @Autowired
     private JwtEncoder encoder;
