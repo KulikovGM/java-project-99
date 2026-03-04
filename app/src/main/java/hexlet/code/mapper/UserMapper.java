@@ -15,7 +15,9 @@ import org.mapstruct.ReportingPolicy;
         componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class UserMapper {
     public abstract User map(UserDTO dto);
+
     public abstract User map(UserCreateDTO dto);
+
     public abstract UserDTO map(User model);
 
     public abstract void update(UserUpdateDTO update, @MappingTarget User model);
