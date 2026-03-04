@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true, rollbackFor = Exception.class)
+@Transactional
 @RequiredArgsConstructor
 public class TaskService {
 

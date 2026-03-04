@@ -19,12 +19,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -111,6 +113,24 @@ class TaskStatusControllerTest {
         assertThat(taskStatus).isNotNull();
         assertThat(taskStatus.getSlug()).isEqualTo(taskStatusSlag);
         assertThat(taskStatus.getName()).isEqualTo(data.getName());
+    }
+
+    @Test
+    void update() throws Exception {
+        var taskStatusId = testTaskStatus.getId();
+
+        var data = new HashMap<>();
+        data.put("name", "updated-name");
+        data.put("slug", "updated-slug");
+        var request = put(urlId, taskStatusId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(data));
+
+        mvc.perform(request).andExpect(status().isOk());
+
+        var taskStatus = taskStatusRepository.findById(taskStatusId).orElseThrow();
+
+        assertThat(taskStatus.getName()).isEqualTo("updated-name");
     }
 
     @Test

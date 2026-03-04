@@ -2,7 +2,7 @@ package hexlet.code.controller.api;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-//import hexlet.code.dto.task.TaskCreateDTO;
+import hexlet.code.dto.task.TaskCreateDTO;
 import hexlet.code.dto.task.TaskDTO;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.model.Task;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.http.MediaType;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -26,13 +26,13 @@ import org.springframework.web.context.WebApplicationContext;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.StandardCharsets;
-//import java.util.HashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -103,7 +103,8 @@ class TaskControllerTest {
                 .getResponse();
         var body = response.getContentAsString();
 
-        List<TaskDTO> taskDTOList = om.readValue(body, new TypeReference<>() { });
+        List<TaskDTO> taskDTOList = om.readValue(body, new TypeReference<>() {
+        });
 
         var actual = taskDTOList.stream().map(taskMapper::map).toList();
         var expected = taskRepository.findAll();
@@ -145,6 +146,65 @@ class TaskControllerTest {
                 v -> v.node("assignee_id").isEqualTo(testTask.getAssignee().getId()),
                 v -> v.node("taskLabelIds").isArray().hasSizeGreaterThan(0)
         );
+    }
+
+    @Test
+    void create() throws Exception {
+        var createData = new TaskCreateDTO();
+        createData.setIndex(testTask.getIndex());
+        createData.setTitle(testTask.getName().toLowerCase());
+        createData.setContent(testTask.getDescription());
+        createData.setStatus(testTask.getTaskStatus().getSlug());
+        createData.setAssigneeId(testTask.getAssignee().getId());
+
+        var request = post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(createData));
+
+        var response = mvc.perform(request)
+                .andExpect(status().isCreated())
+                .andReturn()
+                .getResponse();
+
+        var responseBody = response.getContentAsString();
+        var createdTask = om.readValue(responseBody, TaskDTO.class);
+        var taskId = createdTask.getId();
+
+        var task = taskRepository.findById(taskId).orElseThrow();
+
+        assertThat(task).isNotNull();
+        assertThat(task.getIndex()).isEqualTo(createData.getIndex());
+        assertThat(task.getDescription()).isEqualTo(createData.getContent());
+        assertThat(task.getTaskStatus().getSlug()).isEqualTo(createData.getStatus());
+        assertThat(task.getAssignee().getId()).isEqualTo(createData.getAssigneeId());
+        assertThat(task.getName()).isEqualTo(createData.getTitle());
+    }
+
+    @Test
+    void update() throws Exception {
+        var taskId = testTask.getId();
+
+        var data = new HashMap<>();
+        data.put("index", 55555);
+
+        var request = put(urlId, taskId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(data));
+
+        mvc.perform(request).andExpect(status().isOk());
+
+        var task = taskRepository.findById(taskId).orElseThrow();
+
+        assertThat(task.getIndex()).isEqualTo(55555);
+    }
+
+    @Test
+    void destroy() throws Exception {
+        var taskId = testTask.getId();
+        mvc.perform(delete(urlId, taskId))
+                .andExpect(status().isNoContent());
+        var task = taskRepository.existsById(taskId);
+        assertThat(task).isFalse();
     }
 
 }
