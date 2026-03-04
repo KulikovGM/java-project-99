@@ -70,3 +70,11 @@ java {
 application {
     mainClass = "hexlet.code.AppApplication"
 }
+
+checkstyle {
+    toolVersion = "10.12.0"
+
+    configFile = file("${rootDir}/app/config/checkstyle/checkstyle.xml")
+
+    // configFile = file("config/checkstyle/checkstyle.xml")
+}
