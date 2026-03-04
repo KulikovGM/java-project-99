@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
+@SuppressWarnings("java:S6437")
 @Component
 @AllArgsConstructor
 public class DataInitializer implements ApplicationRunner {
