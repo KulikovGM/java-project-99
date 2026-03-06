@@ -1,8 +1,8 @@
 FROM eclipse-temurin:21-jdk
 
-WORKDIR /app
+WORKDIR /
 
-COPY /app .
+COPY / .
 
 RUN ./gradlew installDist
 

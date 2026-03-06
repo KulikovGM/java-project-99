@@ -22,6 +22,6 @@ make install
 make start
 ```
 
-Open in browser: http://localhost:7070
+Open in browser: http://localhost:8080
 
 ---
