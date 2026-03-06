@@ -74,7 +74,5 @@ application {
 checkstyle {
     toolVersion = "10.12.0"
 
-    //configFile = file("${rootDir}/app/config/checkstyle/checkstyle.xml")
-
     configFile = file("config/checkstyle/checkstyle.xml")
 }
