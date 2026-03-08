@@ -9,19 +9,32 @@
 Link to application: https://java-project-99-yj7j.onrender.com
 
 # Task Manager
-
+It is a task management system. 
+It allows you to set tasks, assign performers, and change their statuses.
+Registration and authentication are required to use the system.
 ## Requirements
 
-* Java 21
-* Gradle > 8.5
+* Java 21 & Spring Boot 3
+* Gradle > 8.7
 
-## Usage
-
+## Install and run locally
+1. Clone the repository and go to the project directory:
 ```bash
-make install
-make start
+git clone https://github.com/KulikovGM/java-project-99.git
+cd java-project-99
+````
+2. Run locally:
+```bash
+make build
 ```
+3. Open
+```
+http://localhost:8080
 
-Open in browser: http://localhost:8080
-
----
+username: hexlet@example.com
+password: qwerty
+```
+4. OpenAPI(Swagger)
+```
+http://localhost:8080/swagger-ui.html
+```
