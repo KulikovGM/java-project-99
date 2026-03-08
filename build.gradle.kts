@@ -13,6 +13,7 @@ sonar {
     properties {
         property("sonar.projectKey", "KulikovGM_java-project-99")
         property("sonar.organization", "kulikovgm")
+        property("sonar.host.url", "https://sonarcloud.io")
     }
 }
 
