@@ -61,6 +61,21 @@ testing {
     }
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+    jvmArgs(
+        "-XX:+EnableDynamicAgentLoading",
+        "-Xshare:off"
+    )
+    testLogging {
+        events = setOf(
+            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+            org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+            org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+        )
+    }
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
