@@ -61,6 +61,11 @@ testing {
     }
 }
 
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+    }
+}
 
 tasks.withType<Test> {
     useJUnitPlatform()
@@ -89,6 +94,5 @@ application {
 
 checkstyle {
     toolVersion = "10.12.0"
-
     configFile = file("config/checkstyle/checkstyle.xml")
 }
