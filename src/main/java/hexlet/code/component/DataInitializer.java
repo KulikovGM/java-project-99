@@ -3,6 +3,7 @@ package hexlet.code.component;
 import hexlet.code.dto.label.LabelCreateDTO;
 import hexlet.code.dto.task.TaskCreateDTO;
 import hexlet.code.dto.taskstatus.TaskStatusCreateDTO;
+import hexlet.code.dto.user.UserCreateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.mapper.TaskStatusMapper;
@@ -60,12 +61,13 @@ public class DataInitializer implements ApplicationRunner {
 
     private void createAdminUser() {
         var email = "hexlet@example.com";
-        var userData = new User();
+
+        var userData = new UserCreateDTO();
+        userData.setFirstName("Admin");
+        userData.setLastName("Admin");
         userData.setEmail(email);
-        userData.setPasswordDigest(passwordEncoder.encode("qwerty"));
-        userData.setFirstName("admin");
-        userData.setLastName("admin");
-        userRepository.save(userData);
+        userData.setPassword("qwerty");
+        userService.create(userData);
     }
 
     private void createTaskStatuses() {
