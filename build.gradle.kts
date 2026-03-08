@@ -14,6 +14,11 @@ sonar {
         property("sonar.projectKey", "KulikovGM_java-project-99")
         property("sonar.organization", "kulikovgm")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths",
+            "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml")
+
+        property("sonar.sources", "src/main/java")
+        property("sonar.tests", "src/test/java")
     }
 }
 
