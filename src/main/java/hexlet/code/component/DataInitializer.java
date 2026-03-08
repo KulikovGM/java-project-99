@@ -25,22 +25,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-@SuppressWarnings("java:S6437")
 @Component
 @AllArgsConstructor
 public class DataInitializer implements ApplicationRunner {
+
     @Autowired
     private final UserRepository userRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private TaskStatusRepository taskStatusRepository;
+
     @Autowired
     private TaskStatusMapper taskStatusMapper;
+
     @Autowired
     private TaskMapper taskMapper;
-    private final TaskStatusService taskStatusService;
 
+    private final TaskStatusService taskStatusService;
     private final UserService userService;
     private final TaskService taskService;
     private final LabelService labelService;
@@ -48,6 +52,13 @@ public class DataInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        createAdminUser();
+        createTaskStatuses();
+        createTasks();
+        createLabels();
+    }
+
+    private void createAdminUser() {
         var email = "hexlet@example.com";
         var userData = new User();
         userData.setEmail(email);
@@ -55,7 +66,9 @@ public class DataInitializer implements ApplicationRunner {
         userData.setFirstName("admin");
         userData.setLastName("admin");
         userRepository.save(userData);
+    }
 
+    private void createTaskStatuses() {
         var taskStatusData = Map.of(
                 "Draft", "draft",
                 "ToReview", "to_review",
@@ -70,34 +83,31 @@ public class DataInitializer implements ApplicationRunner {
             taskStatus.setSlug(value);
             taskStatusService.create(taskStatus);
         });
+    }
 
-        // Task
-        var user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User with email " + email + " not found"));
+    private void createTasks() {
+        var user = userRepository.findByEmail("hexlet@example.com")
+                .orElseThrow(() -> new ResourceNotFoundException("Admin user not found"));
 
-        taskStatusData.values().forEach(v ->
-                IntStream.range(1, 5).forEach(i -> {
-                    var task = new TaskCreateDTO();
-                    task.setIndex(faker.number().numberBetween(1, 1000));
-                    task.setAssigneeId(user.getId());
-                    task.setTitle(faker.name().title());
-                    task.setContent(faker.hobbit().quote());
-                    task.setStatus(v);
-                    taskService.create(task);
-                })
-        );
+        List.of("draft", "to_review", "to_be_fixed", "to_publish", "published")
+                .forEach(status ->
+                        IntStream.range(1, 5).forEach(i -> {
+                            var task = new TaskCreateDTO();
+                            task.setIndex(faker.number().numberBetween(1, 1000));
+                            task.setAssigneeId(user.getId());
+                            task.setTitle(faker.name().title());
+                            task.setContent(faker.hobbit().quote());
+                            task.setStatus(status);
+                            taskService.create(task);
+                        })
+            );
+    }
 
-        // Label
-        var labelData = List.of(
-                "feature",
-                "bug"
-        );
-
-        labelData.forEach(l -> {
+    private void createLabels() {
+        List.of("feature", "bug").forEach(name -> {
             var label = new LabelCreateDTO();
-            label.setName(l);
+            label.setName(name);
             labelService.createLabel(label);
         });
     }
-
 }
