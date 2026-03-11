@@ -8,9 +8,9 @@ import hexlet.code.service.UserService;
 import hexlet.code.util.UserUtils;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,12 +29,9 @@ import java.util.List;
 @RequestMapping("/api/users")
 @AllArgsConstructor
 public class UserController {
+    private final UserRepository userRepository;
     private final UserService userService;
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserUtils userUtils;
+    private final UserUtils userUtils;
 
     @GetMapping("")
     public ResponseEntity<List<UserDTO>> index() {
@@ -58,6 +55,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@userUtils.isCurrentUser(#id)")
     public UserDTO update(@Valid @RequestBody UserUpdateDTO userData,
                           @PathVariable Long id,
                           @AuthenticationPrincipal UserDetails currentUser) {
@@ -67,6 +65,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@userUtils.isCurrentUser(#id)")
     public void destroy(@PathVariable Long id) {
         userService.delete(id);
     }
