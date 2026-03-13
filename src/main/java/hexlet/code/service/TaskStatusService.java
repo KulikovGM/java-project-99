@@ -3,53 +3,17 @@ package hexlet.code.service;
 import hexlet.code.dto.taskstatus.TaskStatusCreateDTO;
 import hexlet.code.dto.taskstatus.TaskStatusDTO;
 import hexlet.code.dto.taskstatus.TaskStatusUpdateDTO;
-import hexlet.code.exception.ResourceNotFoundException;
-import hexlet.code.mapper.TaskStatusMapper;
-import hexlet.code.repository.TaskStatusRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@AllArgsConstructor
-public class TaskStatusService {
-    private final TaskStatusRepository taskStatusRepository;
-    private final TaskStatusMapper taskStatusMapper;
+public interface TaskStatusService {
+    List<TaskStatusDTO> getAll();
 
-    public List<TaskStatusDTO> getAll() {
-        var taskStatus = taskStatusRepository.findAll();
+    TaskStatusDTO findById(Long id);
 
-        return taskStatus.stream()
-                .map(taskStatusMapper::map)
-                .toList();
-    }
+    TaskStatusDTO create(TaskStatusCreateDTO taskStatusData);
 
-    public TaskStatusDTO findById(Long id) {
-        var taskStatus = taskStatusRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("TaskStatus with id " + id + " not found"));
+    TaskStatusDTO update(TaskStatusUpdateDTO taskStatusData, Long id);
 
-        return taskStatusMapper.map(taskStatus);
-    }
-
-    public TaskStatusDTO create(TaskStatusCreateDTO taskStatusData) {
-        var taskStatus = taskStatusMapper.map(taskStatusData);
-        taskStatusRepository.save(taskStatus);
-
-        return taskStatusMapper.map(taskStatus);
-    }
-
-    public TaskStatusDTO update(TaskStatusUpdateDTO taskStatusData, Long id) {
-        var taskStatus = taskStatusRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
-
-        taskStatusMapper.update(taskStatusData, taskStatus);
-        taskStatusRepository.save(taskStatus);
-
-        return taskStatusMapper.map(taskStatus);
-    }
-
-    public void delete(Long id) {
-        taskStatusRepository.deleteById(id);
-    }
+    void delete(Long id);
 }

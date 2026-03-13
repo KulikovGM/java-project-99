@@ -89,7 +89,7 @@ public class DataInitializer implements ApplicationRunner {
         List.of("feature", "bug").forEach(name -> {
             var label = new LabelCreateDTO();
             label.setName(name);
-            labelService.createLabel(label);
+            labelService.create(label);
         });
     }
 }
