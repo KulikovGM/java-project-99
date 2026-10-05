@@ -6,12 +6,21 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=KulikovGM_java-project-99&metric=coverage)](https://sonarcloud.io/summary/new_code?id=KulikovGM_java-project-99)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=KulikovGM_java-project-99&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=KulikovGM_java-project-99)
 
-Link to application: https://java-project-99-yj7j.onrender.com
-
 # Task Manager
 It is a task management system. 
 It allows you to set tasks, assign performers, and change their statuses.
 Registration and authentication are required to use the system.
+
+Link to application: https://java-project-99-yj7j.onrender.com
+
+Access for testing:
+
+📌 Login: `hexlet@example.com`
+
+🔑 Password: `qwerty`
+
+Полная документация API -> 📚 [Swagger UI](https://java-project-99-yj7j.onrender.com/swagger-ui.html)
+
 ## Requirements
 
 * Java 21 & Spring Boot 3
